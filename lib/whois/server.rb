@@ -233,7 +233,10 @@ module Whois
       # @raise  [Whois::ServerNotSupported]
       #         when the string type is detected,
       #         but the object type doesn't have any supported WHOIS adapter associated.
-      def guess(string)
+      def guess(string, host=nil)
+        # Use standard if host has been given
+        return factory(:tld, ".", host) unless host.nil?
+
         # Top Level Domain match
         return factory(:tld, ".", "whois.iana.org") if matches_tld?(string)
 
